@@ -1,4 +1,4 @@
-# PyChain
+# PyBlock
 
 ## :snake: Building a Blockchain from scratch in Python.
 ### :link: I built this Blockchain in Python to better understand how a Blockchain works
