@@ -180,7 +180,41 @@ class Transaction ():
 def calculateHash(self):
 	hashString = str(self.sender) + str(self.receiver) + str(self.amt) + str(self.time)
 	hasEncode = json.dumps(hashString, sort_keyes=True).encode()
-	return blake(hashEncode).hexdigest()
+	return blake3(hashEncoded).hexdigest()
+
+def isValidTransaction(self):
+		#VERIFY TRANSACTION
+
+		if(self.id != self.calculateHash()):
+			print("Hash Problem \n")
+			return False
+		
+		if(self.sender == self.receiver):
+			print("Sender = Receiver, Please Change Receiver Address \n")
+			return False
+		
+		if(self.sender == "Miner Rewards"):
+			#Needs More Work
+			return True
+		
+		#Using Public Key to verify
+		message = str(self.amt)
+		public_key = (base64.b64decode(self.sender)).hex()
+		signature = base64.b64decode(self.signature)
+		vk = ecdsa.b64ecode(self.signature)
+		vk = ecdsa.VerifyingKey.from_string(bytes.fromhex(public_key), curve=ecdsa.SECP256k1)
+		signature = base64.base64.b64decode(self.signature)
+		vk = ecdsa.VerifyingKey.from_string(bytes.fromhex(public_key), curve=ecdsa.SECP256k1)
+		verify = vk.verify(signature, message.encode())
+
+		if verify:
+			print("Transaction Verified! \n")
+			return True
+		else:
+			print("Signature Verification Error")
+			return False
+
+
 
 
  
