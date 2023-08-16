@@ -134,6 +134,17 @@ class Block ():
 			self.nonse = 0
 			self.hash = self.calculatingHah()
 
+def calculateHash(self):
+
+	hasTransactions = ""
+
+	for transaction in self.transactions:
+		hashTransactions += transaction.id
+	hashString = str(self.time) + hashTransactions + self.prev + str(self.nonse)
+	hashEncode = json.dumps(hasString, sort_keys=True).encode()
+	return blake3(hashEncode).hexdigest()
+
+ 
 
 
 
