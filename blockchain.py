@@ -110,6 +110,23 @@ def isValidChain(self):
 		
 	return True
 
+def getBalanc(self, person):
+	balance = 0
+	for i in range(1, len(self.chain)):
+		block = self.chain[i]
+		try:
+				for j in range(0, len(block.transactions)):
+					transaction = block.transactions[j]
+					if(transaction.sender == person):
+						balance -= transaction.amt
+					if(transaction.reciver == person):
+						balance += transaction.amt
+		except AttributeError:
+			print("no transaction")
+	return balance 
+
+
+
 
 
 
