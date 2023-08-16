@@ -1,8 +1,10 @@
-import json
-import ecdsa
-from datetime import datetime
-from blake3 import blake3
 import base64
+import json
+from datetime import datetime
+
+import ecdsa
+from blake3 import blake3
+
 
 class Blockchain ():
 	def __init__(self):
@@ -88,6 +90,25 @@ def getLastBlock(self):
 
 	genesis.prev = "None"
 	return genesis
+
+def isValidChain(self):
+	for i in range(1, len(self.chain)):
+		bi = self.chain[i-1]
+		b2 = self.chain[i]
+
+		if not b2.hashValidTransaction():
+			print("error 3")
+			return False
+		
+		if b2.hash != b2.calculateHash():
+			print("error 4")
+			return False
+		
+		if b2.prev != b1.hash:
+			print("error 5")
+			return False
+		
+	return True
 
 
 
