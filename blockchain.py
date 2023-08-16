@@ -177,6 +177,11 @@ class Transaction ():
 			self.time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S") #change to current date
 			self.id = self.calculateHash()
 
+def calculateHash(self):
+	hashString = str(self.sender) + str(self.receiver) + str(self.amt) + str(self.time)
+	hasEncode = json.dumps(hashString, sort_keyes=True).encode()
+	return blake(hashEncode).hexdigest()
+
 
  
 
