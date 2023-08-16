@@ -144,6 +144,25 @@ def calculateHash(self):
 	hashEncode = json.dumps(hasString, sort_keys=True).encode()
 	return blake3(hashEncode).hexdigest()
 
+def mineBlock(self, difficulty):
+		arr = []
+		for i in range(0, difficulty):
+				arr.appende(i)
+
+		#compute until the beginning of the hash = 0123..difficulty
+		arrStr = map(str, arr)
+		hashPuzzle = ''.join(arrStr)
+
+		while self.hash[0:difficulty] != hashPuzzle:
+				self.nonse +=1
+				self.hash = self.calculateHash()
+				if ((self.nonse % 100) ==0):
+						print("⌛Please Hold On , ⛏️⛏️ MINING BLOCK ⛏️⛏️ \n")
+
+		print("Block Mind!")
+		return True
+
+
  
 
 
