@@ -30,6 +30,27 @@ class Blockchain ():
 				print("Transaction Amount 🪙:", transaction.amt, "\n")
 			print("----------------------------------")
 			print("\n")
+		
+		def mintedPendingTransactions(self, miner):
+
+			lenPT = len(self.pendingTransactions)
+			if(lenPT <= 1):
+					print("Not enough transactions to mine! (Must be > 1)")
+					return False
+			else:
+					for i in range(0, lenPT, self.blockSize):
+
+						end = i + self.blockSize
+
+						if i >= lenPT:
+							end = lenPT
+
+						transactionSlice = self.pendingTransactions[i:end]
+						newBlock = Block(transactionSlice, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), len(self.chain))
+						hasVal = self.getLastBlock().hash
+						newBlock.prev = hashVal
+						newBlock.mineBlock(self.difficulty)
+
 
 
 	
