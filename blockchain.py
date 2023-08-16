@@ -213,6 +213,16 @@ def isValidTransaction(self):
 		else:
 			print("Signature Verification Error")
 			return False
+		
+def sign_tx(self, private_key):
+
+	message = str(self.amt)
+	bmessage = message.encode()
+	sk = ecdsa.SigniKey.from_string(bytes.fromhex(private_key), curve=ecdsa.SECP256K1)
+	signature = base64.b64encode(sk.sign(bmessage))
+	self.signature = signature
+
+	return True
 
 
 
