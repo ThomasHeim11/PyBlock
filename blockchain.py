@@ -162,6 +162,13 @@ def mineBlock(self, difficulty):
 		print("Block Mind!")
 		return True
 
+def hasValidTransaction(self):
+		for i in range(0, len(self.transaction)):
+			transaction = self.transaction[i]
+			if not transaction.isValidTransaction():
+					return False
+			return True
+
 
  
 
