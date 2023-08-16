@@ -11,6 +11,7 @@ class Blockchain ():
 		self.difficulty = 2
 		self.minerRewards = 50
 		self.blockSize = 10
+		
 
 	
 	def displayChain(self):
@@ -30,26 +31,41 @@ class Blockchain ():
 				print("Transaction Amount 🪙:", transaction.amt, "\n")
 			print("----------------------------------")
 			print("\n")
+			
+
+	def minePendingTransactions(self, miner):
 		
-		def mintedPendingTransactions(self, miner):
+		lenPT = len(self.pendingTransactions)
+		if(lenPT <= 1):
+			print("Not enough transactions to mine! (Must be > 1)")
+			return False
+		else:
+			for i in range(0, lenPT, self.blockSize):
 
-			lenPT = len(self.pendingTransactions)
-			if(lenPT <= 1):
-					print("Not enough transactions to mine! (Must be > 1)")
+				end = i + self.blockSize
+
+				if i >= lenPT:
+					end = lenPT
+
+				transactionSlice = self.pendingTransactions[i:end]
+				newBlock = Block(transactionSlice, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), len(self.chain))
+				hashVal = self.getLastBlock().hash
+				newBlock.prev = hashVal
+				newBlock.mineBlock(self.difficulty)
+
+				if self.isValidChain():
+					self.chain.append(newBlock)
+					print("Adding a new Block!")
+					payMiner = Transaction("Miner Rewards", miner, self.minerRewards)
+					self.pendingTransactions = [payMiner]
+				else:
 					return False
-			else:
-					for i in range(0, lenPT, self.blockSize):
 
-						end = i + self.blockSize
+		return True
 
-						if i >= lenPT:
-							end = lenPT
 
-						transactionSlice = self.pendingTransactions[i:end]
-						newBlock = Block(transactionSlice, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), len(self.chain))
-						hasVal = self.getLastBlock().hash
-						newBlock.prev = hashVal
-						newBlock.mineBlock(self.difficulty)
+		return True
+
 
 
 
