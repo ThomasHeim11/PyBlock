@@ -125,6 +125,17 @@ def getBalanc(self, person):
 			print("no transaction")
 	return balance 
 
+class Block ():
+	def __init__(self, transaction, time, index):
+			self.index = index 
+			self.transactions = transactions
+			self.time = time
+			self.prev = ''
+			self.nonse = 0
+			self.hash = self.calculatingHah()
+
+
+
 
 
 
