@@ -1,10 +1,8 @@
-import base64
 import json
-from datetime import datetime
-
 import ecdsa
+from datetime import datetime
 from blake3 import blake3
-
+import base64
 
 class Blockchain ():
 	def __init__(self):
@@ -64,127 +62,136 @@ class Blockchain ():
 					return False
 
 		return True
-	
-def addTransaction(self, sender, recevierm, amt, senderKey):
-	#DECODE SENDER RECEIVER KEY IN test FILE
 
-	if not sender or not receiver or not amt:
-		print("transacation error 1")
-		return False
-	
-	transaction = Transaction(sender, reciver, amt)
-
-	if not transaction.sign_tx(senderKey):
-		return False
-	
-	if not transaction.isValidTransaction():
-		print("transaction error 2")
-		return False
-	self.pendingTransaction.append(transaction)
-	return len(self.chain) + 1
-
-def getLastBlock(self):
-	tArr = []
-	tArr.append(Transaction("Satoshi", "Me", 10))
-	genesis = Block(tArr, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), 0)
-
-	genesis.prev = "None"
-	return genesis
-
-def isValidChain(self):
-	for i in range(1, len(self.chain)):
-		bi = self.chain[i-1]
-		b2 = self.chain[i]
-
-		if not b2.hashValidTransaction():
-			print("error 3")
-			return False
+	def addTransaction(self, sender, receiver, amt, senderKey):
+		#DECODE SENDER RECEIVER KEY IN test FILE
 		
-		if b2.hash != b2.calculateHash():
-			print("error 4")
+		if not sender or not receiver or not amt:
+			print("transaction error 1")
 			return False
-		
-		if b2.prev != b1.hash:
-			print("error 5")
-			return False
-		
-	return True
 
-def getBalanc(self, person):
-	balance = 0
-	for i in range(1, len(self.chain)):
-		block = self.chain[i]
-		try:
+		transaction = Transaction(sender, receiver, amt)
+
+		if not transaction.sign_tx(senderKey):
+			return False
+
+		if not transaction.isValidTransaction():
+			print("transaction error 2")
+			return False
+		self.pendingTransactions.append(transaction)
+		return len(self.chain) + 1
+
+	def getLastBlock(self):
+
+		return self.chain[-1]
+
+	def addGenesisBlock(self):
+		tArr = []
+		tArr.append(Transaction("Satoshi", "Me", 10))
+		genesis = Block(tArr, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), 0)
+
+		genesis.prev = "None"
+		return genesis
+
+	def isValidChain(self):
+		for i in range(1, len(self.chain)):
+			b1 = self.chain[i-1]
+			b2 = self.chain[i]
+
+			if not b2.hasValidTransactions():
+				print("error 3")
+				return False
+
+			if b2.hash != b2.calculateHash():
+				print("error 4")
+				return False
+
+
+			if b2.prev != b1.hash:
+				print("error 5")
+				return False
+		return True
+		
+	def getBalance(self, person):
+		balance = 0 
+		for i in range(1, len(self.chain)):
+			block = self.chain[i]
+			try:
 				for j in range(0, len(block.transactions)):
 					transaction = block.transactions[j]
 					if(transaction.sender == person):
 						balance -= transaction.amt
-					if(transaction.reciver == person):
+					if(transaction.receiver == person):
 						balance += transaction.amt
-		except AttributeError:
-			print("no transaction")
-	return balance 
+			except AttributeError:
+				print("no transaction")
+		return balance
+
 
 class Block ():
-	def __init__(self, transaction, time, index):
-			self.index = index 
-			self.transactions = transactions
-			self.time = time
-			self.prev = ''
-			self.nonse = 0
-			self.hash = self.calculatingHah()
+	def __init__(self, transactions, time, index):
+		self.index = index
+		self.transactions = transactions
+		self.time = time
+		self.prev = ''
+		self.nonse = 0
+		self.hash = self.calculateHash()
 
-def calculateHash(self):
 
-	hasTransactions = ""
+	def calculateHash(self):
 
-	for transaction in self.transactions:
-		hashTransactions += transaction.id
-	hashString = str(self.time) + hashTransactions + self.prev + str(self.nonse)
-	hashEncode = json.dumps(hasString, sort_keys=True).encode()
-	return blake3(hashEncode).hexdigest()
+		hashTransactions = ""
 
-def mineBlock(self, difficulty):
+		for transaction in self.transactions:
+			hashTransactions += transaction.id
+		hashString = str(self.time) + hashTransactions + self.prev + str(self.nonse)
+		hashEncoded = json.dumps(hashString, sort_keys=True).encode()
+		return blake3(hashEncoded).hexdigest()
+
+	def mineBlock(self, difficulty):
 		arr = []
 		for i in range(0, difficulty):
-				arr.appende(i)
-
+			arr.append(i)
+		
 		#compute until the beginning of the hash = 0123..difficulty
-		arrStr = map(str, arr)
+		arrStr = map(str, arr)  
 		hashPuzzle = ''.join(arrStr)
-
+		
 		while self.hash[0:difficulty] != hashPuzzle:
-				self.nonse +=1
-				self.hash = self.calculateHash()
-				if ((self.nonse % 100) ==0):
-						print("⌛Please Hold On , ⛏️⛏️ MINING BLOCK ⛏️⛏️ \n")
-
-		print("Block Mind!")
+			self.nonse += 1
+			self.hash = self.calculateHash()
+			if ((self.nonse % 100) == 0):
+				print("⌛Please Hold On , ⛏️⛏️ MINING BLOCK ⛏️⛏️ \n")
+			
+		print("Block Mined!")
 		return True
 
-def hasValidTransaction(self):
-		for i in range(0, len(self.transaction)):
-			transaction = self.transaction[i]
+	def hasValidTransactions(self):
+		for i in range(0, len(self.transactions)):
+			transaction = self.transactions[i]
 			if not transaction.isValidTransaction():
-					return False
+				return False
 			return True
-		
+	
+	
 class Transaction ():
-		def _init_(self, sender, receiver, amt):
-			self.sender = sender
-			self.receiver = receiver
-			self.amt = amt
-			self.time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S") #change to current date
-			self.id = self.calculateHash()
+	def __init__(self, sender, receiver, amt):
+		self.sender = sender
+		self.receiver = receiver
+		self.amt = amt
+		self.time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S") #change to current date
+		self.id = self.calculateHash()
 
-def calculateHash(self):
-	hashString = str(self.sender) + str(self.receiver) + str(self.amt) + str(self.time)
-	hasEncode = json.dumps(hashString, sort_keyes=True).encode()
-	return blake3(hashEncoded).hexdigest()
 
-def isValidTransaction(self):
+	def calculateHash(self):
+		hashString = str(self.sender) + str(self.receiver) + str(self.amt) + str(self.time)
+		hashEncoded = json.dumps(hashString, sort_keys=True).encode()
+		return blake3(hashEncoded).hexdigest()
+		
+
+	def isValidTransaction(self):
 		#VERIFY TRANSACTION
-
+		
 		if(self.id != self.calculateHash()):
 			print("Hash Problem \n")
 			return False
@@ -197,16 +204,14 @@ def isValidTransaction(self):
 			#Needs More Work
 			return True
 		
-		#Using Public Key to verify
+
+		#Using Public Key to verify 
 		message = str(self.amt)
 		public_key = (base64.b64decode(self.sender)).hex()
 		signature = base64.b64decode(self.signature)
-		vk = ecdsa.b64ecode(self.signature)
-		vk = ecdsa.VerifyingKey.from_string(bytes.fromhex(public_key), curve=ecdsa.SECP256k1)
-		signature = base64.base64.b64decode(self.signature)
 		vk = ecdsa.VerifyingKey.from_string(bytes.fromhex(public_key), curve=ecdsa.SECP256k1)
 		verify = vk.verify(signature, message.encode())
-
+		
 		if verify:
 			print("Transaction Verified! \n")
 			return True
@@ -214,27 +219,12 @@ def isValidTransaction(self):
 			print("Signature Verification Error")
 			return False
 		
-def sign_tx(self, private_key):
+	def sign_tx(self, private_key):
+    
+		message = str(self.amt)
+		bmessage = message.encode()
+		sk = ecdsa.SigningKey.from_string(bytes.fromhex(private_key), curve=ecdsa.SECP256k1)
+		signature = base64.b64encode(sk.sign(bmessage))
+		self.signature = signature 
 
-	message = str(self.amt)
-	bmessage = message.encode()
-	sk = ecdsa.SigniKey.from_string(bytes.fromhex(private_key), curve=ecdsa.SECP256K1)
-	signature = base64.b64encode(sk.sign(bmessage))
-	self.signature = signature
-
-	return True
-
-
-
-
- 
-
-
-
-
-
-
-
-	
-	
-			
+		return True
