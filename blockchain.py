@@ -168,6 +168,14 @@ def hasValidTransaction(self):
 			if not transaction.isValidTransaction():
 					return False
 			return True
+		
+class Transaction ():
+		def _init_(self, sender, receiver, amt):
+			self.sender = sender
+			self.receiver = receiver
+			self.amt = amt
+			self.time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S") #change to current date
+			self.id = self.calculateHash()
 
 
  
