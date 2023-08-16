@@ -62,9 +62,32 @@ class Blockchain ():
 					return False
 
 		return True
+	
+def addTransaction(self, sender, recevierm, amt, senderKey):
+	#DECODE SENDER RECEIVER KEY IN test FILE
 
+	if not sender or not receiver or not amt:
+		print("transacation error 1")
+		return False
+	
+	transaction = Transaction(sender, reciver, amt)
 
-		return True
+	if not transaction.sign_tx(senderKey):
+		return False
+	
+	if not transaction.isValidTransaction():
+		print("transaction error 2")
+		return False
+	self.pendingTransaction.append(transaction)
+	return len(self.chain) + 1
+
+def getLastBlock(self):
+	tArr = []
+	tArr.append(Transaction("Satoshi", "Me", 10))
+	genesis = Block(tArr, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), 0)
+
+	genesis.prev = "None"
+	return genesis
 
 
 
