@@ -11,18 +11,22 @@
 
 
 
-## :rocket: What did I learn?
+## :rocket: Key Takeaways
 
-1. How a Transaction is validated & verified before adding it to a Block
-2. How a Block is validated & verified before adding it to a Blockchain
-3. What is mining, proof of work and how it works
-4. How to calculate hashing on transaction and block
-5. How transactions are signed and verified 
-6. How a miner gets rewarded 
+In this project, I delved into the fundamental concepts of blockchain technology and gained insights into the intricate processes that underpin its functionality. Specifically, I focused on the following key learning points:
 
+1. **Transaction Validation and Verification:** I comprehended the crucial steps involved in validating and verifying transactions before their inclusion in a block. This understanding extends to the significance of ensuring the accuracy and authenticity of each transaction✅
 
-## :rocket: Features Yet to be Added
-I still need to work on distributed consensus part.
+2. **Block Validation and Verification:** I gained proficiency in the validation and verification procedures that a block undergoes prior to its integration into the blockchain. This involves grasping the mechanisms that guarantee the integrity and consistency of the blockchain🎊
+
+3. **Mining and Proof of Work:** My exploration included an in-depth analysis of mining operations and the concept of proof of work. I now grasp the role of miners in securing the network and the intricate computational processes behind it⛏️
+
+4. **Hashing Calculations:** I acquired the ability to calculate and comprehend the hashing functions applied to both transactions and blocks. This skill is essential for ensuring data integrity and maintaining the security of the blockchain🧮
+
+5. **Transaction Signing and Verification:** I developed a clear understanding of how transactions are signed and subsequently verified, ensuring that only valid transactions are processed and added to the blockchain🪄
+
+6. **Miner Incentives:** I now understand the rewarding system for miners and the incentives that drive them to contribute their computational power to maintain the blockchain network🤑
+
 
 ## Dockerized Local Blockchain built in Python
 ## 🛸How to run?
